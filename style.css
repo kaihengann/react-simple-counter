@@ -1,4 +1,6 @@
-
+/* * {
+  box-sizing: border-box
+} */
 body {
 	font-family: Helvetica;
 	line-height: 3;
@@ -12,7 +14,7 @@ h1 {
 #app {
   text-align: center;
   align-content: center;
-  margin: 1.5rem;
+  margin: 1.25rem;
   border: none;
   color: white;
 }
@@ -24,14 +26,14 @@ h1 {
   display: inline-block;
   line-height: 80px;
   margin: 1.5rem;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
-#app button {
+#app .btn {
   height: 80px;
   width: 150px;
-  margin: 1.5rem;
-  font-size: 2rem;
+  margin: 1.25rem;
+  font-size: 1.5rem;
   background-color: rgb(233, 233, 233);
 }
 
@@ -39,11 +41,11 @@ h1 {
   outline: none;
 }
 
-.negative {
+.display-negative {
   background-color: red;
 }
 
-.positive {
+.display-positive {
   background-color: green;
 }
 

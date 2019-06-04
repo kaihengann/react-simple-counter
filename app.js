@@ -1,24 +1,8 @@
-// function Counter(props) {
-//   const handleClick = () => {
-//     console.log("Hello");
-//   };
-
-//   return (
-//     <div id="app">
-//       <h1>React Simple Counter</h1>
-//       <button>{props.startCount}</button>
-//       <button onClick={handleClick}>+</button>
-//       <button onClick={handleClick}>-</button>
-//     </div>
-//   );
-// }
-
 class Counter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      count: 0
-    };
+    this.state = { count: props.count };
+    this.decrementCount = this.decrementCount.bind(this);
   }
 
   incrementCount = () => {
@@ -27,55 +11,75 @@ class Counter extends React.Component {
     });
   };
 
-  decrementCount = () => {
-    this.setState(state => {
-      return { count: state.count - 1 };
-    });
-  };
+  decrementCount() {
+    this.setState(state => ({ count: state.count - 1 }));
+  }
 
-  bgColor = () => {
-    return this.state.count >= 0 ? "display positive" : "display negative";
+  checkColor = () => {
+    return this.state.count >= 0 ? "display-positive" : "display-negative";
   };
 
   render() {
+    const inputClass = `display ${
+    this.state.count >= 0 ? "display-positive" : "display-negative"
+  } `;
+
     return (
-      <div id="counter">
-        <div className={this.bgColor()}> {this.state.count}</div>
-        <button onClick={this.incrementCount}> + </button>
-        <button onClick={this.decrementCount}> - </button>
-        <Display 
-          bgColor={this.bgColor()}
+      <div className="counter">
+        <Display
           count={this.state.count}
+          className={`display ${ this.checkColor() } `}
         />
-        <Button 
+
+        <Button
+          className="btn btn-increment"
+          text="Increment"
           onClick={this.incrementCount}
-          text='+'
         />
         <Button
-          onClick={this.incrementCount}
-          text='-'
+          className="btn btn-decrement"
+          text="Decrement"
+          onClick={this.decrementCount}
         />
       </div>
     );
-  };
+  }
 }
 
-const Display = ({bgColor, count}) => {
+function Button({ className, onClick, text }) {
   return (
-  <div className={bgColor}>{count}</div>
-  )
+    <button className={className} onClick={onClick}>
+      {text}
+    </button>
+  );
+}
+
+const Display = ({ count, className }) => {
+  return <div className={className}>{count}</div>;
 };
-const Button = ({className, onClick, text}) => {
-  return (
-    <button className={className} onClick={onClick}> {text} </button>
-  )
-};
 
-{/* <button onClick={incrementCount}> + </button>
-<button onClick={decrementCount}> - </button> */}
+function App() {
+  // each counter should have its own initial count value
+  // each counter should have its own unique key
 
+  // index can be used only if array is not push or pop
 
-const element = <Counter />;
+  const counters = [
+    { id: "123", initialCount: 0 },
+    { id: "345", initialCount: -10 },
+    { id: "234", initialCount: 9 },
+    { id: "562", initialCount: 2 }
+  ];
 
-const container = document.getElementById("app");
+  const counterItems = counters.map(counter => {
+    return <Counter key={counter.id} count={counter.initialCount} />;
+  });
+
+  return <React.Fragment>{counterItems}</React.Fragment>;
+}
+
+const element = <App />;
+
+const container = document.querySelector("#app");
+
 ReactDOM.render(element, container);
